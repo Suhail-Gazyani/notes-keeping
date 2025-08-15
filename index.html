@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Notes Keeping App</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background-color: #f7f7f7; }
+    h1 { text-align: center; }
+    #noteInput { width: 100%; padding: 15px; font-size: 16px; border: 1px solid #ccc; border-radius: 5px; }
+    #addBtn { margin-top: 10px; padding: 10px 20px; background-color: #007BFF; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+    #addBtn:hover { background-color: #0056b3; }
+    .note { background: #fff; border: 1px solid #ddd; padding: 10px; margin-top: 10px; border-radius: 5px; position: relative; }
+    .deleteBtn { position: absolute; top: 5px; right: 5px; background-color: red; color: #fff; border: none; padding: 4px 8px; cursor: pointer; border-radius: 3px; }
+  </style>
+</head>
+<body>
+  <h1>Notes Keeping App</h1>
+  <textarea id="noteInput" rows="4" placeholder="Type your note here..."></textarea>
+  <button id="addBtn">Add Note</button>
+  <div id="notes"></div>
+
+  <script>
+    let notes = [];
+    function addNote() {
+      const noteInput = document.getElementById("noteInput");
+      const noteText = noteInput.value.trim();
+      if (noteText === "") { alert("Please write something in the note"); return; }
+      notes.push(noteText);
+      noteInput.value = "";
+      displayNotes();
+    }
+    function deleteNote(index) { notes.splice(index, 1); displayNotes(); }
+    function displayNotes() { const notesDiv = document.getElementById("notes"); notesDiv.innerHTML = ""; notes.forEach((note, index) => { const noteDiv = document.createElement("div"); noteDiv.className = "note"; noteDiv.innerHTML = `${note}<button class="deleteBtn" onclick="deleteNote(${index})">X</button>`; notesDiv.appendChild(noteDiv); }); }
+    document.getElementById("addBtn").addEventListener("click", addNote);
+  </script>
+</body>
+</html>
